@@ -1,8 +1,19 @@
 <html>
 <head>
-	<title></title>
+	<title>{{ListTitle}}</title>
 </head>
 <body>
+	<h4>{{ListTitle}}</h4>
+	<form action="/" method="POST">
+	<textarea id="TextToSave"/></textarea>
+	<input type="submit" value="Save" onclick="saveText()"/>
+	<form>
+	<ul>
+		{{#TodoItems}}
+		<li>{{value}}</li>
+		{{/TodoItems}}
+	</ul>
+	{{someOtherProp}}
 <!-- display all todo notes here -->
 </body>
 </html>
