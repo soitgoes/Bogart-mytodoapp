@@ -3,29 +3,51 @@ var bogart = require('bogart')
 
 var viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'));
 
+var todos = {};
+
 var router = bogart.router();
 
+router.get('/', function(req) {
+var errors = req.params.errors;
+var todoList = []; // the array that will contain every saved to do created
 var context = {
-	locals: {
-		ListTitle: "My Todo List",
-		TodoItems: [
-					{value: 'This is my first item to do!'}, 
-					{value: 'This is my second item to do!'},
-					{value: 'This is my third item to do!'}
-					]
-	},
+  locals: {
+    ListTitle: "My Todo List",
+    todos: todoList
+  },
 };
-
-router.get('/', function(req, res) {
+for (var todoName in todos){
+    todoList.push(todos[todoName]);
+  }
   return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
 });
-function SaveText(){
-var todotext = $("#TextToSave").val();
-context.TodoItems.push({value: "" + todotext + ""});
-};
-var app = bogart.app();
 
+router.post("/", function(req) {
+  var todo = {name: req.params.name, description: req.params.description },
+      errors = [];
+
+if(!todo.name || todo.name.trim() === "") {
+  errors.push("A name for your to do is required");
+}
+ if (errors.length > 0) {
+    return bogart.redirect("/?errors="+JSON.stringify(errors));
+  }
+  todos[todo.name] = todo;
+
+return bogart.redirect("/");
+});
+
+router.del("/:name", function(req) {
+console.log('deleting '+req.params.name);
+console.log(todos);
+delete todos[req.params.name];
+
+return bogart.redirect("/");
+});
+
+var app = bogart.app();
+app.use(bogart.batteries);
 app.use(router); // Our router
 
 app.start();

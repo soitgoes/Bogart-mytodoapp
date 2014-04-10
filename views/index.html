@@ -3,17 +3,39 @@
 	<title>{{ListTitle}}</title>
 </head>
 <body>
-	<h4>{{ListTitle}}</h4>
-<!--	<form action="/" method="POST"> 
-		<textarea id="TextToSave"/></textarea>
-		<input type="submit" value="Save" onclick="saveText()"/>
-		</form>    -->
-	<ul>
-		{{#TodoItems}}
-		<li>{{value}}</li>
-		{{/TodoItems}}
-	</ul>
-	{{someOtherProp}}
-<!-- display all todo notes here -->
+	
+<form method="post">
+  <fieldset>
+    <legend>Add a To Do</legend>
+    <div>
+      <label for="name">To Do Name</label>
+      <input name="name" type="text" />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input name="description" type="text" />
+    </div>
+    <div>
+      <input type="submit" value="Add To Do" />
+    </div>
+  </fieldset>
+</form>
+
+<ul>
+  {{#todos}}
+    <li>
+      <form action="/{{name}}" method="post">
+        <input type="hidden" name="_method" value="delete" />
+       
+      <span>{{name}}</span>
+  </li>
+  <li>
+      <p>{{description}}</p>
+    </li>
+     <input type="submit" value="Delete" />
+      </form>
+  {{/todos}}
+</ul>
+
 </body>
 </html>
