@@ -1,5 +1,6 @@
 var bogart = require('bogart')
-, path   = require('path');
+, path   = require('path')
+, mysql = require('mysql');
 
 var viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'));
 
