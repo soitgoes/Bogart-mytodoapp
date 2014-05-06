@@ -1,0 +1,28 @@
+{
+  "name": "Bogart-mytodoapp",
+  "version": "0.0.0",
+  "description": "A to do application utilizing Bogart and Nodejs",
+  "main": "app.js",
+  "dependencies": {
+    "bogart": "~0.5.9",
+    "mysql": "~2.0.1",
+    "nodemon": "~0.7.10",
+    "git-fs": "0.0.10",
+    "mustache": "~0.8.1",
+    "sequelize": "~1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mcsharps/Bogart-mytodoapp.git"
+  },
+  "author": "Madison Sharps",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mcsharps/Bogart-mytodoapp/issues"
+  },
+  "homepage": "https://github.com/mcsharps/Bogart-mytodoapp"
+}
