@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Bogart-ToDoApp
 ==============
 
@@ -8,7 +7,7 @@ A To Do List/Note creation Application made in Bogart
 npm install bogart
 npm install mysql
 npm install nodemon //is this worth using? 
-//will need setup instructions for mysql (will I need a seperate file from my main app.js?)
+//will need setup instructions for mysql
 
 create a folder in root called views, this should include an index page, add page, edit page, etc..
 
