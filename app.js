@@ -1,6 +1,6 @@
 var bogart = require('bogart')
 , path   = require('path')
-, mysql = require('mysql');
+, nano = require('nano');
 
 var viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'));
 
@@ -35,7 +35,11 @@ if(!todo.name || todo.name.trim() === "") {
     return bogart.redirect("/?errors="+JSON.stringify(errors));
   }
   todos[todo.name] = todo;
-
+var madstodo = nano.use('madstodo');
+madstodo.insert({ title: todo.name, description: todo.description }, 'todo', function(err, body) {
+  if (!err)
+    console.log(body);
+});
 return bogart.redirect("/");
 });
 
