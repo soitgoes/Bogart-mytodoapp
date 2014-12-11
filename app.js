@@ -7,7 +7,7 @@ var todos = {};
 var router = bogart.router();
 
 router.get('/', function(req) {
-var errors = req.params.errors;
+  var errors = req.params.errors;
 var todoList = []; // the array that will contain every saved to do created
 var context = {
   locals: {
@@ -16,9 +16,9 @@ var context = {
   },
 };
 for (var todoName in todos){
-    todoList.push(todos[todoName]);
-  }
-  return viewEngine.respond('index.html', context);
+  todoList.push(todos[todoName]);
+}
+return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
 });
 
@@ -26,13 +26,13 @@ router.post("/", function(req) {
   var todo = {
     name: req.params.name, //request paramater name from the html form post
     description: req.params.description // request parameter desc from the html form post
-      },
-      errors = [];
+  },
+  errors = [];
 
-if(!todo.name || todo.name.trim() === "") {
+  if(!todo.name || todo.name.trim() === "") {
   errors.push("A name for your to do is required"); //check that the todo is not empty string
 }
- if (errors.length > 0) {
+if (errors.length > 0) {
     return bogart.redirect("/?errors="+JSON.stringify(errors)); //print out the error;
   }
   todos[todo.name] = todo; //pushes the todo down below on html 
@@ -40,19 +40,19 @@ var madstodo = nano.use('madstodo'); //figure out best place to destroy db then 
 madstodo.insert(
   todo, /*pass in the todo object, need to setup filters in couch*/  
   function(err, body) {
-  
-  if (!err)
-    console.log(body);
-});
+    
+    if (!err)
+      console.log(body);
+  });
 return bogart.redirect("/");
 });
 
 router.del("/:name", function(req) {
-console.log('deleting '+req.params.name);
-console.log(todos);
-delete todos[req.params.name];
+  console.log('deleting '+req.params.name);
+  console.log(todos);
+  delete todos[req.params.name];
 
-return bogart.redirect("/");
+  return bogart.redirect("/");
 });
 
 var app = bogart.app();
