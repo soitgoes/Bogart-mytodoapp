@@ -9,7 +9,8 @@
     "nodemon": "~0.7.10",
     "git-fs": "0.0.10",
     "mustache": "~0.8.1",
-    "sequelize": "~1.7.3"
+    "sequelize": "~1.7.3",
+    "nano": "~6.0.2"
   },
   "devDependencies": {},
   "scripts": {

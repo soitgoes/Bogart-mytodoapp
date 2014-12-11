@@ -1,11 +1,9 @@
 var bogart = require('bogart')
 , path   = require('path')
-, nano = require('nano');
+, nano = require('nano')('http://localhost:5984');
 
 var viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'));
-
 var todos = {};
-
 var router = bogart.router();
 
 router.get('/', function(req) {
@@ -25,18 +23,24 @@ for (var todoName in todos){
 });
 
 router.post("/", function(req) {
-  var todo = {name: req.params.name, description: req.params.description },
+  var todo = {
+    name: req.params.name, //request paramater name from the html form post
+    description: req.params.description // request parameter desc from the html form post
+      },
       errors = [];
 
 if(!todo.name || todo.name.trim() === "") {
-  errors.push("A name for your to do is required");
+  errors.push("A name for your to do is required"); //check that the todo is not empty string
 }
  if (errors.length > 0) {
-    return bogart.redirect("/?errors="+JSON.stringify(errors));
+    return bogart.redirect("/?errors="+JSON.stringify(errors)); //print out the error;
   }
-  todos[todo.name] = todo;
-var madstodo = nano.use('madstodo');
-madstodo.insert({ title: todo.name, description: todo.description }, 'todo', function(err, body) {
+  todos[todo.name] = todo; //pushes the todo down below on html 
+var madstodo = nano.use('madstodo'); //figure out best place to destroy db then create it on each new run for dev-ing 
+madstodo.insert(
+  todo, /*pass in the todo object, need to setup filters in couch*/  
+  function(err, body) {
+  
   if (!err)
     console.log(body);
 });
