@@ -5,7 +5,7 @@ A To Do List/Note creation Application made in Bogart
 
 -
 npm install bogart
-npm install mysql
+npm install nano
 npm install nodemon //is this worth using? 
 //will need setup instructions for mysql
 
