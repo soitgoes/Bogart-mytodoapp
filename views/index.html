@@ -3,24 +3,8 @@
 	<title>{{ListTitle}}</title>
 </head>
 <body>
+<button type="button" class="btn btn-default"><a href="/addtodo">Add a Todo</a></button>
 	
-<form method="post">
-  <fieldset>
-    <legend>Add a To Do</legend>
-    <div>
-      <label for="name">To Do Name</label>
-      <input name="name" type="text" />
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <input name="description" type="text" />
-    </div>
-    <div>
-      <input type="submit" value="Add To Do" />
-    </div>
-  </fieldset>
-</form>
-
 <ul>
   {{#todos}}
     <li>

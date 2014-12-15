@@ -1,28 +1,47 @@
 var bogart = require('bogart')
 , path   = require('path')
-, nano = require('nano')('http://localhost:5984');
-
-var viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'));
-var todos = {};
-var router = bogart.router();
+, nano = require('nano')('http://localhost:5984')
+, madstodo = nano.use('madstodo')
+, viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'))
+, todos = {}
+, router = bogart.router();
 
 router.get('/', function(req) {
-  var errors = req.params.errors;
+var errors = req.params.errors;
 var todoList = []; // the array that will contain every saved to do created
 var context = {
   locals: {
     ListTitle: "My Todo List",
     todos: todoList
-  },
-};
-for (var todoName in todos){
-  todoList.push(todos[todoName]);
-}
+      },
+    };
+    for (var todoName in todos){
+  todoList.push(todos[todoName]); 
+  //This for ^ is pushing the locally saved todos, need to load from db 
+  }
+
+/* madstodo.get('todoList', { revs_info: true }, function(err, body) {
+  if (!err)
+    console.log(body);
+}); */
+
 return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
 });
 
-router.post("/", function(req) {
+router.get("/addtodo", function(req){
+var errors = req.params.errors;
+var todoList = []; // the array that will contain every saved to do created
+var context = {
+  locals: {
+    ListTitle: "My Todo List",
+    todos: todoList
+      },
+    };
+return viewEngine.respond('addPage.html', context);
+})
+
+router.post("/addtodo", function(req) {
   var todo = {
     name: req.params.name, //request paramater name from the html form post
     description: req.params.description // request parameter desc from the html form post
@@ -36,7 +55,7 @@ if (errors.length > 0) {
     return bogart.redirect("/?errors="+JSON.stringify(errors)); //print out the error;
   }
   todos[todo.name] = todo; //pushes the todo down below on html 
-var madstodo = nano.use('madstodo'); //figure out best place to destroy db then create it on each new run for dev-ing 
+//figure out best place to destroy db then create it on each new run for dev-ing 
 madstodo.insert(
   todo, /*pass in the todo object, need to setup filters in couch*/  
   function(err, body) {
@@ -51,6 +70,11 @@ router.del("/:name", function(req) {
   console.log('deleting '+req.params.name);
   console.log(todos);
   delete todos[req.params.name];
+
+  /*madstodo.destroy('thedocumentsRevID# to delete', function(err, body) {
+  if (!err)
+    console.log(body);
+});*/
 
   return bogart.redirect("/");
 });

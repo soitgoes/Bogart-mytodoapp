@@ -3,11 +3,21 @@
 	<title></title>
 </head>
 <body>
-<h1>What do you need to do today?</h1>
-<textarea placeholder="Name"></textarea>
-<br/>
-<textarea placeholder="Description"></textarea>
-<br/>
-<input type="submit" name="submit">
+<form method="post">
+  <fieldset>
+    <legend>Add a To Do</legend>
+    <div>
+      <label for="name">To Do Name</label>
+      <input name="name" type="text" />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <input name="description" type="text" />
+    </div>
+    <div>
+      <input type="submit" value="Add To Do" />
+    </div>
+  </fieldset>
+</form>
 </body>
 </html>
