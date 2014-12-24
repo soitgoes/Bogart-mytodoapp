@@ -4,16 +4,16 @@ Bogart-ToDoApp
 A To Do List/Note creation Application made in Bogart
 
 -
-npm install bogart
-npm install nano
-npm install nodemon //is this worth using? 
-//will need setup instructions for mysql
+###You will need to install node if you do not have it
+###You will need to download and install a copy of couchdb
+##npm install bogart
+##npm install nano
+##npm install nodemon
 
-create a folder in root called views, this should include an index page, add page, edit page, etc..
 
-index page- main page for showing all of the notes you have made
+index page - main page for showing all of the notes you have made and deleting with confirmation from the user
 
-add page- page for creating a new to do list/note. This should include a Name of the note and the description.
+add page- page for creating a new to do list/note. This should include a Title of the note and the description.
 
 edit page- you should be taken to this page when you want to edit a note from the index page.
 
