@@ -37,7 +37,7 @@ madstodo.view('td', 'tdNaD', function(err, body) {
     });
   }
 }); /* This is the right method, takes the design doc name and view name, and spits out whatever the view is designed to spit out.
-need to figure out how to create a new design doc and view name each time with each new db re-up. now gotta figure out how to push that out to html*/
+Now gotta figure out how to push that out to html*/
 
 return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
