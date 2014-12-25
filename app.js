@@ -1,10 +1,12 @@
 var bogart = require('bogart')
 , path   = require('path')
 , nano = require('nano')('http://localhost:5984')
-, madstodo = nano.use('madstodo')
 , viewEngine = bogart.viewEngine('mustache', path.join(bogart.maindir(), 'views'))
 , todos = {}
 , router = bogart.router();
+nano.db.destroy('madstodo');
+nano.db.create('madstodo'); //burn the last iteration
+var madstodo = nano.use('madstodo')
 
 router.get('/', function(req) {
 var errors = req.params.errors;
@@ -15,15 +17,16 @@ var context = {
     todos: todoList
       },
     };
+
     for (var todoName in todos){
   todoList.push(todos[todoName]); 
   //This for ^ is pushing the locally saved todos, need to load from db 
   }
 
-/* madstodo.get('todoList', { revs_info: true }, function(err, body) {
-  if (!err)
-    console.log(body);
-}); */
+// madstodo.get(req.params.name, req.params.description, function(err, body){
+//    if (!err)
+//         console.log(body, req.params.name, req.params.description);
+// }); prob not the right method
 
 return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
@@ -57,7 +60,7 @@ if (errors.length > 0) {
   todos[todo.name] = todo; //pushes the todo down below on html 
 //figure out best place to destroy db then create it on each new run for dev-ing 
 madstodo.insert(
-  todo, /*pass in the todo object, need to setup filters in couch*/  
+  todo, 
   function(err, body) {
     
     if (!err)
