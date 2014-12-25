@@ -7,6 +7,14 @@ var bogart = require('bogart')
 nano.db.destroy('madstodo');
 nano.db.create('madstodo'); //burn the last iteration
 var madstodo = nano.use('madstodo')
+  madstodo.insert(
+  { "views": 
+    { "tdNaD": 
+      { "map": function(doc) { emit([doc.name, doc.description], doc._id); } } 
+    }
+  }, '_design/td', function (error, response) {
+    console.log("yay response " + response);
+  }); //create the design doc
 
 router.get('/', function(req) {
 var errors = req.params.errors;
@@ -22,11 +30,14 @@ var context = {
   todoList.push(todos[todoName]); 
   //This for ^ is pushing the locally saved todos, need to load from db 
   }
-
-// madstodo.get(req.params.name, req.params.description, function(err, body){
-//    if (!err)
-//         console.log(body, req.params.name, req.params.description);
-// }); prob not the right method
+madstodo.view('td', 'tdNaD', function(err, body) {
+  if (!err) {
+    body.rows.forEach(function(doc) {
+      console.log(doc.value); 
+    });
+  }
+}); /* This is the right method, takes the design doc name and view name, and spits out whatever the view is designed to spit out.
+need to figure out how to create a new design doc and view name each time with each new db re-up. now gotta figure out how to push that out to html*/
 
 return viewEngine.respond('index.html', context);
   // Mustache.to_html(templateString, context.locals)
