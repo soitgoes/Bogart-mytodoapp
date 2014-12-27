@@ -13,7 +13,7 @@ var madstodo = nano.use('madstodo')
       { "map": function(doc) { emit([doc.name, doc.description], doc._id); } } 
     }
   }, '_design/td', function (error, response) {
-    console.log("yay response " + response);
+    console.log("created td view and tdNaD DesignDoc " + response);
   }); //create the design doc
 
 router.get('/', function(req) {
