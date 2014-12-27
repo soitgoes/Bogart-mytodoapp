@@ -8,7 +8,7 @@ A To Do List/Note creation Application made in Bogart
 1. Node
 2. Couchdb
 3. NPM Install
-*package.json should take care of node installs but if not just npm install them if you run into any trouble.
+  *package.json should take care of node installs but if not just npm install them if you run into any trouble.
 -----------
 ##Views Folder
 1. index page - main page for showing all of the notes you have made and deleting with confirmation from the user
